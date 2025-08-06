@@ -14,7 +14,7 @@ export default class User extends BaseModel {
   @column()
   declare password: string
 
-  @column()
+  @column({ columnName: 'profile_image_url' })
   declare profileImageUrl: string
 
   @column.dateTime({ autoCreate: true })
