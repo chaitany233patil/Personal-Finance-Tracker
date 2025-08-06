@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
+import { signJWT } from '../utils/jwt.js'
 import { registerUserValidator, loginUserValidator } from '#validators/user_validator'
 
 export default class AuthController {
@@ -19,9 +20,11 @@ export default class AuthController {
     const res = await User.findBy('email', email)
     if (await hash.verify(res?.$original.password, password)) {
       if (res?.$original) {
+        const token = signJWT(res.$original)
         return {
           success: true,
           message: 'login successful',
+          token,
         }
       }
     }
@@ -29,6 +32,14 @@ export default class AuthController {
     return {
       success: false,
       message: 'username and email is incorrect',
+    }
+  }
+
+  async me(ctx: HttpContext) {
+    return {
+      success: true,
+      //@ts-ignore
+      data: ctx.User,
     }
   }
 }
