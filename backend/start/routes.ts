@@ -25,5 +25,12 @@ router.post('/login', [AuthController, 'login'])
 router.get('/me', [AuthController, 'me']).use(middleware.jwtAuth())
 
 //Expense Routes
-router.get('/expense', [ExpensesController, 'getallExpense']).use(middleware.jwtAuth())
-router.post('/expense', [ExpensesController, 'addExpense']).use(middleware.jwtAuth())
+router
+  .group(() => {
+    router.get('/', [ExpensesController, 'getallExpense'])
+    router.post('/', [ExpensesController, 'addExpense'])
+    router.put('/:id', [ExpensesController, 'updateExpense'])
+    router.delete('/:id', [ExpensesController, 'deleteExpense'])
+  })
+  .prefix('/expense')
+  .use(middleware.jwtAuth())
