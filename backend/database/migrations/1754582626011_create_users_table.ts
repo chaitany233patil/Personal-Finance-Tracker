@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('username').unique()
       table.string('email').unique()
       table.string('password')
-      table.string('profileImgUrl').nullable()
+      table.string('profile_img_url').nullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

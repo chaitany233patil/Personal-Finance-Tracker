@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.string('title')
       table.integer('amount')
       table.string('category')
-      table.string('recieptUrl').nullable()
+      table.string('reciept_Url').nullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')
