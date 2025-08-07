@@ -5,18 +5,6 @@ export default class User extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column()
-  declare name: string
-
-  @column()
-  declare email: string
-
-  @column()
-  declare password: string
-
-  @column({ columnName: 'profile_image_url' })
-  declare profileImageUrl: string
-
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

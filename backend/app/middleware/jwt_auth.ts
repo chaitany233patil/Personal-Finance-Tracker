@@ -21,7 +21,7 @@ export default class JwtAuthMiddleware {
     const res = await User.findBy('email', (decoded as JwtPayload).email)
     if (res?.$original) {
       //@ts-ignore
-      ctx.User = res?.$original
+      ctx.user = res?.$original
       await next()
     }
     return {
