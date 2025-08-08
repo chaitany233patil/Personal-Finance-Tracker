@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+import CloudinaryService from '#services/cloudinary_service'
 
 const AuthController = () => import('#controllers/auth_controller')
 const ExpensesController = () => import('#controllers/expenses_controller')
@@ -34,3 +35,22 @@ router
   })
   .prefix('/expense')
   .use(middleware.jwtAuth())
+
+router.post('/upload', async ({ request, response }) => {
+  const receipt = request.file('receipt', {
+    size: '2mb',
+    extnames: ['jpg', 'png', 'jpeg'],
+  })
+
+  if (!receipt?.isValid) {
+    return response?.badRequest({
+      errors: receipt?.errors,
+    })
+  }
+
+  const uploadResult = await CloudinaryService.uploadFile(receipt.tmpPath!, 'my_project/posts')
+  console.log(uploadResult.url)
+  return {
+    file: uploadResult.url,
+  }
+})

@@ -58,6 +58,7 @@
     "@adonisjs/lucid": "^21.8.0",
     "@maximemrf/adonisjs-jwt": "^0.6.1",
     "@vinejs/vine": "^3.0.1",
+    "cloudinary": "^2.7.0",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.7.1",
     "mysql2": "^3.14.3",
