@@ -18,7 +18,7 @@ export default class Expense extends BaseModel {
   declare amount: number
 
   @column()
-  declare reciept_Url: string
+  declare receipt_Url: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Expense from '#models/expense'
 import { ExpesneValidator } from '#validators/expense_validator'
+import CloudinaryService from '#services/cloudinary_service'
 
 export default class ExpensesController {
   async getallExpense(ctx: HttpContext) {
@@ -14,16 +15,29 @@ export default class ExpensesController {
   }
 
   async addExpense(ctx: HttpContext) {
+    const receipt = ctx.request.file('receipt', {
+      size: '2mb',
+      extnames: ['jpg', 'png', 'jpeg'],
+    })
+
+    if (!receipt?.isValid) {
+      return ctx.response?.badRequest({
+        errors: receipt?.errors,
+      })
+    }
+    const uploadResult = await CloudinaryService.uploadFile(receipt.tmpPath!, 'my_project/posts')
+
     const data = ctx.request.body()
     //@ts-ignore
-    const userId = ctx.user.id
-    data.user_id = userId
+    data.user_id = ctx.user.id
+    data.receipt_url = uploadResult.url
+
     const payload = await ExpesneValidator.validate(data)
     const res = await Expense.create(payload as object)
-    console.log(res)
     return {
       success: true,
       message: 'Expense added',
+      data: res.$original,
     }
   }
 

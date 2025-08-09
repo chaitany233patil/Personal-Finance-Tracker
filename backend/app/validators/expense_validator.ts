@@ -6,6 +6,6 @@ export const ExpesneValidator = vine.compile(
     title: vine.string(),
     amount: vine.number(),
     category: vine.string(),
-    reciept_Url: vine.string(),
+    receipt_url: vine.string(),
   })
 )
