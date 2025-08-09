@@ -15,7 +15,7 @@ const ExpensesController = () => import('#controllers/expenses_controller')
 
 router.get('/', async () => {
   return {
-    hello: 'world',
+    heath: 'Good',
   }
 })
 
